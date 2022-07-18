@@ -27,7 +27,7 @@ static function X2DataTemplate CreateTemplate_PA_GatekeeperGun()
 	Template.RemoveTemplateAvailablility(Template.BITFIELD_GAMEAREA_Multiplayer);
 	Template.RangeAccuracy = class'X2Item_DefaultWeapons'.default.MEDIUM_CONVENTIONAL_RANGE;
 	// Template.BaseDamage = class'X2Item_DefaultWeapons'.default.GATEKEEPERMP_WPN_BASEDAMAGE;
-	Template.BaseDamage = class'X2Item_DefaultWeapons'.default.ANDROMEDON_WPN_BASEDAMAGE;
+	Template.BaseDamage = class'X2Item_DefaultWeapons'.default.GATEKEEPER_WPN_BASEDAMAGE;
 	Template.iClipSize = 1;
 	Template.iSoundRange = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_ISOUNDRANGE;
 	Template.iEnvironmentDamage = class'X2Item_DefaultWeapons'.default.ASSAULTRIFLE_MAGNETIC_IENVIRONMENTDAMAGE;
