@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Default" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Guid>d5d860c6-236a-4407-b266-c5c4d52d7fee</Guid>
+    <Name>PlayableGatekeeper</Name>
+    <Description>Description of My XCOM 2 Mod.</Description>
+    <SteamPublishID>0</SteamPublishID>
+    <AssemblyName>PlayableGatekeeper</AssemblyName>
+    <RootNamespace>PlayableGatekeeper</RootNamespace>
+    <ProjectGuid>{eaef2b55-e348-4635-8367-b241acbeae00}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(MSBuildLocalExtensionPath)\XCOM2.targets" />
+  <ItemGroup>
+    <Folder Include="Config\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Content" />
+    <Folder Include="Src\" />
+    <Folder Include="Src\PlayableGatekeeper\" />
+    <Folder Include="Src\PlayableGatekeeper\Classes\" />
+    <Folder Include="Content\" />
+    <Content Include="Config\XComClassData.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComGameData.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XComGameData_CharacterStats.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\XcomStrategyTuning.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\PlayableAdvent_ModShaderCache.upk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\PlayableGatekeeper_ModShaderCache.upk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\UILibrary_PlayableAdvent.upk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ReadMe.txt" />
+    <Content Include="ModPreview.jpg" />
+    <Content Include="Config\XComEditor.ini" />
+    <Content Include="Config\XComEngine.ini" />
+    <Content Include="Config\XComGame.ini" />
+    <Content Include="Localization\XComGame.int" />
+    <Content Include="Src\PlayableGatekeeper\Classes\PA_Characters.uc">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Src\PlayableGatekeeper\Classes\X2DownloadableContentInfo_PlayableGatekeeper.uc" />
+    <Content Include="PublishedFileId.ID" />
+    <Content Include="Localization\PlayableGatekeeper.int" />
+    <Content Include="Src\PlayableGatekeeper\Classes\PA_GatekeeperTech.uc" />
+    <Content Include="Src\PlayableGatekeeper\Classes\X2Character_PlayableGateKeeper.uc" />
+    <Content Include="Src\PlayableGatekeeper\Classes\X2Item_PAWeapons.uc" />
+    <Content Include="Src\PlayableGatekeeper\Classes\XGCharacterGenerator_Gatekeeper.uc" />
+  </ItemGroup>
+</Project>

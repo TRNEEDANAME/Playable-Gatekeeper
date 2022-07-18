@@ -1,0 +1,39 @@
+[UICustomize_AlienInfo]
+m_strTitle=EDIT ALIEN INFO
+m_strFirstNameLabel=First Name
+m_strLastNameLabel=Last Name
+m_strNicknameLabel=Nickname
+m_strEditBiography=Biography
+m_strGender=Gender
+m_strNationality=Nationality
+m_strBiographyLabel=CHARACTER BIOGRAPHY
+
+[Country_Mec X2CountryTemplate]
+DisplayName="Mec"
+DisplayNameWithArticle="Mec"
+DisplayNameWithArticleLower="Mec"
+DisplayNamePossessive="Mec's"
+DisplayAdjective="Mechanical"
+
+[X2EventListener_AlienCapture]
+JoinedXCOMTitle="Retrieval Success"
+JoinedXCOM="<XGParam:StrValue0/!UnitName/> will join XCOM after the mission."
+
+LootTitle="Loot Bonus"
+Loot="Bonus loot was gained from the capture."
+
+[PA_GatekeeperGun X2WeaponTemplate]
+FriendlyName="Gatekeeper Blaster"
+BriefSummary="Gatekeeper Blaster"
+TacticalText="<Bullet/> Gatekeeper Blaster. <Bullet/> Not usable by human soldiers -- it's a part of them !"
+AbilityDescName="Gatekeeper Blaster"
+
+[PA_Gatekeeper_Tech X2TechTemplate]
+DisplayName="Restoring a Gatekeeper"
+Summary="We could use their enormous psionic output to reanimate the shell and with the help of Chief Engineer Shen, we could our own version of a Gatekeeper."
+CodeName="Tentakles"
+LongDescript="The gatekeeper restoration was a sucess"
+
+[XGCharacterGenerator_Gatekeeper]
+GatekeeperFirstName="Gatekeeper"
+GatekeeperLastNamePrefix="Gatekeeper"
