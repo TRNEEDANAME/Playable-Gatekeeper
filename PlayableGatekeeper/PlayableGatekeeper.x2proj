@@ -27,6 +27,9 @@
     <Content Include="Config\XComGameData_CharacterStats.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XcomGameData_WeaponData.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XcomStrategyTuning.ini">
       <SubType>Content</SubType>
     </Content>
@@ -39,7 +42,6 @@
     <Content Include="Content\UILibrary_PlayableAdvent.upk">
       <SubType>Content</SubType>
     </Content>
-    <Content Include="ReadMe.txt" />
     <Content Include="ModPreview.jpg" />
     <Content Include="Config\XComEditor.ini" />
     <Content Include="Config\XComEngine.ini" />
@@ -55,5 +57,6 @@
     <Content Include="Src\PlayableGatekeeper\Classes\X2Character_PlayableGateKeeper.uc" />
     <Content Include="Src\PlayableGatekeeper\Classes\X2Item_PAWeapons.uc" />
     <Content Include="Src\PlayableGatekeeper\Classes\XGCharacterGenerator_Gatekeeper.uc" />
+    <Content Include="ReadMe.md" />
   </ItemGroup>
 </Project>

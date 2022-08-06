@@ -20,8 +20,6 @@ static function X2DataTemplate CreatePA_Gatekeeper_TechTemplate()
 {
 
 	local X2TechTemplate Template;
-	local ArtifactCost Artifacts;
-	local ArtifactCost Resources;
 
 	`CREATE_X2TEMPLATE(class'X2TechTemplate', Template, 'PA_Gatekeeper_Tech');
 	Template.bProvingGround = true;
