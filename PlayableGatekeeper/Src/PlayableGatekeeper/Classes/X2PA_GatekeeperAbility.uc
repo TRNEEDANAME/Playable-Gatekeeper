@@ -7,26 +7,122 @@ var name PA_ClosedEffectName;			// Closed effect name referenced in code/script
 var config StatCheck RETRACT_CHECK;
 
 
-var config float MASS_REANIMATION_RADIUS_METERS;
-var config float MASS_REANIMATION_RANGE_METERS;
-var config float MASS_REANIMATION_ANIMATION_MIN_DELAY_SEC;
-var config float MASS_REANIMATION_ANIMATION_MAX_DELAY_SEC;
-var config float RETRACT_DAMAGE_CHANCE_PER_ROLL;
-var config float ANIMA_CONSUME_LIFE_AMOUNT_MULTIPLIER;
+// ================================================================
+// Initial State ability 
+// ================================================================
 
-var config int OpenCloseCooldown;	// Shared open/close ability cooldown duration.
-var config int MASS_REANIMATION_LOCAL_COOLDOWN;
-var config int MASS_REANIMATION_GLOBAL_COOLDOWN;
-var config int GATEKEEPER_CLOSED_ARMOR_ADJUST;
-var config int GATEKEEPER_CLOSED_ARMORCHANCE_ADJUST;
-var config int GATEKEEPER_CLOSED_SIGHT_ADJUST;
-var config int GATEKEEPER_CLOSED_DEFENSE_ADJUST;
-var config int ANIMA_CONSUME_RANGE_UNITS;
+//* Initial State ability boolean */
 
-const PA_Gatekeeper_Closed_Value=0;	// Arbitrary value designated as the closed value.
-const PA_Gatekeeper_Open_Value=1;		// Arbitrary value designated as the open value.
+var config bool PA_Gatekeeper_InitialStateDontDisplayInAbilitySummary;
 
+
+// ================================================================
+// Open ability
+// ================================================================
+
+//* ----------- Open ability int ----------- */
+var config int PA_Gatekeeper_OpenAbilityCost;
+var config int PA_Gatekeeper_OpenCooldown;
+
+//* ----------- Open ability boolean ----------- */
+var config bool PA_Gatekeeper_IsOpenAbilityFreeCost;
+
+//* ----------- Open ability const ----------- */
+const PA_Gatekeeper_Closed_Value=0;
+const PA_Gatekeeper_Open_Value=1;
+
+//* ----------- Open ability name ----------- */
 var private name PA_OpenedEffectName;
+
+
+// ================================================================
+// Close ability
+// ================================================================
+
+//* ----------- Close ability int ----------- */
+var config int PA_Gatekeeper_CloseAbilityCost;
+var config int PA_Gatekeeper_CloseCooldown;
+
+//* ----------- Close ability boolean ----------- */
+var config bool PA_Gatekeeper_CloseMoveBegin_DontDisplayInAbilitySummary;
+var config bool PA_Gatekeeper_IsCloseAbilityFreeCost;
+
+
+// ================================================================
+// Anima Inversion ability
+// ================================================================
+
+//* ----------- Anima Inversion int ----------- */
+var config int PA_Gatekeeper_AnimaInversion_ActionPointCost;
+var config int PA_Gatekeeper_AnimaInversion_Cooldown;
+var config int PA_Gatekeeper_AnimaInversion_Radius;
+var config int PA_Gatekeeper_DoesAnimaInversion_AbilityRange;
+
+//* ----------- FX value ----------- */
+var config int PA_Gatekeeper_AnimaInversion_StartAnimationMinDelaySec;
+var config int PA_Gatekeeper_AnimaInversion_StartAnimationMaxDelaySec;
+
+//* ----------- Anima Inversion boolean ----------- */
+var config bool PA_Gatekeeper_DoesAnimaInversion_ConsumeAllPoints;
+var config bool PA_Gatekeeper_DoesAnimaInversion_IgnoreBlockingCover;
+var config bool PA_Gatekeeper_DoesAnimaInversion_RestrictToSquadsightRange;
+var config bool PA_Gatekeeper_DoesAnimaInversion_IgnoreArmor;
+var config bool PA_Gatekeeper_DoesAnimaInversion_AlwaysKillsCivilians;
+var config bool PA_Gatekeeper_AnimaInversionDontDisplayInAbilitySummary;
+
+//* ----------- Anima Inversion Exclude rules ----------- */
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeDead;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeAlive;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeFriendlyToSource;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeHostileToSource;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeRobotic;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeOrganic;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeAlien;
+var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeCivilian;
+
+
+// ================================================================
+// Anima Consume ability
+// ================================================================
+
+//* ----------- Anima Consume int ----------- */
+
+var config int PA_Gatekeeper_AnimaConsume_ActionPoints;
+var config int PA_Gatekeeper_AnimaConsume_LifeStealMultiplier;
+var config int PA_Gatekeeper_AnimaConsume_Cooldown;
+
+//* ----------- Anima Consume boolean ----------- */
+var config int PA_Gatekeeper_DoesAnimaConsume_ConsumeAllPoints;
+var config bool PA_Gatekeeper_AnimaConsume_RequireWithinRange;
+var config bool PA_Gatekeeper_AnimaConsume_WithinRange;
+var config bool PA_Gatekeeper_AnimaConsume_FailOnNonUnits;
+var config bool PA_Gatekeeper_AnimaConsumeDontDisplayInAbilitySummary;
+
+
+//* ----------- Anima Consume Exlude rules ----------- */
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeDead;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeFriendlyToSource;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeHostileToSource;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeRobotic;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeAlive;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeRobotic;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeOrganic;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeAlien;
+var config bool PA_Gatekeeper_AnimaConsume_ExcludeCivilian;
+
+
+// ================================================================
+// Anima Gate ability
+// ================================================================
+
+//* ----------- Anima Gate int ----------- */
+var config int PA_Gatekeeper_AnimaGate_ActionPointCost;
+
+//* ----------- Anima Gate boolean ----------- */
+var config bool PA_Gatekeeper_AnimaGateDontDisplayInAbilitySummary;
+var config bool PA_Gatekeeper_AnimaGateCooldown;
+var config bool PA_Gatekeeper_DoesAnimaGateAllowSquadsight;
+var config bool PA_Gatekeeper_DoesAnimaGate_ConsumeAllPoints;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -60,7 +156,7 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_GatekeeperInitialState');
 
-	Template.bDontDisplayInAbilitySummary = true;
+	Template.bDontDisplayInAbilitySummary = default.PA_Gatekeeper_InitialStateDontDisplayInAbilitySummary;
 	Template.AbilitySourceName = 'eAbilitySource_Perk';
 	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Neutral;
@@ -124,8 +220,8 @@ static function X2AbilityTemplate CreatePA_GatekeeperOpenAbility()
 	Template.Hostility = eHostility_Neutral;
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
-	ActionPointCost.iNumPoints = default.PA_Gatekeeper_OpenCloseAbilityCost;
-	ActionPointCost.bFreeCost = default.PA_Gatekeeper_IsOpenCloseAbilityFreeCost;
+	ActionPointCost.iNumPoints = default.PA_Gatekeeper_OpenAbilityCost;
+	ActionPointCost.bFreeCost = default.PA_Gatekeeper_IsOpenAbilityFreeCost;
 	Template.AbilityCosts.AddItem(ActionPointCost);
 
 	Template.AbilityToHitCalc = default.DeadEye;
@@ -136,7 +232,7 @@ static function X2AbilityTemplate CreatePA_GatekeeperOpenAbility()
 
 	// Cooldown on the ability
 	Cooldown = new class'X2AbilityCooldown';
-	Cooldown.iNumTurns = default.PA_Gatekeeper_OpenCloseCooldown;
+	Cooldown.iNumTurns = default.PA_Gatekeeper_OpenCooldown;
 	Template.AbilityCooldown = Cooldown;
 	
 	// Set up conditions for Closed check.
@@ -153,7 +249,7 @@ static function X2AbilityTemplate CreatePA_GatekeeperOpenAbility()
 	Template.AddTargetEffect(RemoveClosedEffect);
 	// 2. Set value to Open.
 	SetOpenValue = new class'X2Effect_SetUnitValue';
-	SetOpenValue.UnitName = default.PA_OpenCloseAbilityName;
+	SetOpenValue.UnitName = default.PA_OpenAbilityName;
 	SetOpenValue.NewValueToSet = PA_Gatekeeper_Open_Value;
 	SetOpenValue.CleanupType = eCleanup_BeginTactical;
 	Template.AddTargetEffect(SetOpenValue);
@@ -180,6 +276,7 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 {
 	local X2AbilityTemplate                 Template;
 	local X2AbilityCost_ActionPoints        ActionPointCost;
+	local X2AbilityCooldown                 Cooldown;
 	local X2AbilityTrigger_PlayerInput      InputTrigger;
 	local X2Effect_SetUnitValue				SetClosedValue, SetToggledValue;
 	local X2Condition_UnitValue				IsOpen;
@@ -192,8 +289,8 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 	Template.Hostility = eHostility_Neutral;
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
-	ActionPointCost.iNumPoints = default.PA_Gatekeeper_OpenCloseAbilityCost;
-	ActionPointCost.bFreeCost = default.PA_Gatekeeper_IsOpenCloseAbilityFreeCost;
+	ActionPointCost.iNumPoints = default.PA_Gatekeeper_CloseAbilityCost;
+	ActionPointCost.bFreeCost = default.PA_Gatekeeper_IsCloseAbilityFreeCost;
 	Template.AbilityCosts.AddItem(ActionPointCost);
 
 	Template.AbilityToHitCalc = default.DeadEye;
@@ -208,6 +305,11 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 	Template.AbilityShooterConditions.AddItem(IsOpen);
 
 	Template.AbilityShooterConditions.AddItem( default.LivingShooterProperty );
+
+	// Cooldown on the ability
+	Cooldown = new class'X2AbilityCooldown';
+	Cooldown.iNumTurns = default.PA_Gatekeeper_CloseCooldown;
+	Template.AbilityCooldown = Cooldown;
 
 	// ------------
 	// Closed effects.  Requires condition IsOpen
@@ -415,11 +517,14 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 	Template.AbilitySourceName = 'eAbilitySource_Psionic';
 	Template.bShowActivation = true;
 
+	Template.bDontDisplayInAbilitySummary = default.PA_Gatekeeper_AnimaInversionDontDisplayInAbilitySummary;
+
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.iNumPoints = default.PA_Gatekeeper_AnimaInversion_ActionPointCost;
 	ActionPointCost.bConsumeAllPoints = default.PA_Gatekeeper_DoesAnimaInversion_ConsumeAllPoints;
 	Template.AbilityCosts.AddItem(ActionPointCost);
 
+	// Cooldown on the ability.
 	Cooldown = new class'X2AbilityCooldown';
 	Cooldown.iNumTurns = default.PA_Gatekeeper_AnimaInversion_Cooldown;
 	Template.AbilityCooldown = Cooldown;
@@ -434,7 +539,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 	Template.AbilityShooterConditions.AddItem(IsOpen);
 
 	RadiusMultiTarget = new class'X2AbilityMultiTarget_Radius';
-	RadiusMultiTarget.fTargetRadius = default.MASS_REANIMATION_RADIUS_METERS;
+	RadiusMultiTarget.fTargetRadius = default.PA_Gatekeeper_AnimaInversion_Radius;
 	RadiusMultiTarget.bIgnoreBlockingCover = default.PA_Gatekeeper_DoesAnimaInversion_IgnoreBlockingCover;
 	RadiusMultiTarget.bAllowDeadMultiTargetUnits = true;
 	RadiusMultiTarget.bExcludeSelfAsTargetIfWithinRadius = true;
@@ -451,7 +556,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 
 	// Everything in the blast radius receives psi damage
 	PsiDamageEffect = new class'X2Effect_ApplyWeaponDamage';
-	PsiDamageEffect.EffectDamageValue = class'X2Item_DefaultWeapons'.default.GATEKEEPER_MASS_PSI_REANIMATION_BASEDAMAGE;
+	PsiDamageEffect.EffectDamageValue = class'X2Item_DefaultWeapons'.default.PA_Gatekeeper_AnimaInversion_Damage;
 	PsiDamageEffect.EffectDamageValue.DamageType = 'Psi';
 	PsiDamageEffect.bIgnoreArmor = default.PA_Gatekeeper_DoesAnimaInversion_IgnoreArmor;
 	PsiDamageEffect.bAlwaysKillsCivilians = default.PA_Gatekeeper_DoesAnimaInversion_AlwaysKillsCivilians;
@@ -496,15 +601,15 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 
 	// The unit must be organic, dead, and not an alien
 	UnitPropertyCondition = new class'X2Condition_UnitProperty';
-	UnitPropertyCondition.ExcludeDead = default.PA_Gatekeeper_AnimaInversion_ExcludeDead;
-	UnitPropertyCondition.ExcludeAlive = default.PA_Gatekeeper_AnimaInversion_ExcludeAlive;
-	UnitPropertyCondition.ExcludeRobotic = default.PA_Gatekeeper_AnimaInversion_ExcludeRobotic;
-	UnitPropertyCondition.ExcludeOrganic = default.PA_Gatekeeper_AnimaInversion_ExcludeOrganic;
-	UnitPropertyCondition.ExcludeAlien = default.PA_Gatekeeper_AnimaInversion_ExcludeAlien;
-	UnitPropertyCondition.ExcludeCivilian = default.PA_Gatekeeper_AnimaInversion_ExcludeCivilian;
+	UnitPropertyCondition.ExcludeDead = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeDead;
+	UnitPropertyCondition.ExcludeAlive = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeAlive;
+	UnitPropertyCondition.ExcludeRobotic = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeRobotic;
+	UnitPropertyCondition.ExcludeOrganic = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeOrganic;
+	UnitPropertyCondition.ExcludeAlien = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeAlien;
+	UnitPropertyCondition.ExcludeCivilian = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeCivilian;
 	UnitPropertyCondition.ExcludeCosmetic = true;
-	UnitPropertyCondition.ExcludeFriendlyToSource = default.PA_Gatekeeper_AnimaInversion_ExcludeFriendlyToSource;
-	UnitPropertyCondition.ExcludeHostileToSource = default.PA_Gatekeeper_AnimaInversion_ExcludeHostileToSource;
+	UnitPropertyCondition.ExcludeFriendlyToSource = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeFriendlyToSource;
+	UnitPropertyCondition.ExcludeHostileToSource = default.PA_Gatekeeper_DoesAnimaInversion_ExcludeHostileToSource;
 	UnitPropertyCondition.FailOnNonUnits = true;
 	SpawnZombieEffect.TargetConditions.AddItem(UnitPropertyCondition);
 
@@ -630,6 +735,7 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 {
 	local X2AbilityTemplate Template;
 	local X2AbilityCost_ActionPoints ActionPointCost;
+	local X2AbilityCooldown Cooldown;
 	local X2Condition_UnitValue	IsOpen;
 	local X2Condition_UnitProperty TargetPropertyCondition;
 	local X2Effect_ApplyWeaponDamage WeaponDamageEffect;
@@ -642,6 +748,8 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	Template.AbilitySourceName = 'eAbilitySource_Standard';
 	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_AlwaysShow;
 	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_gatekeeper_animaconsume";
+
+	Template.bDontDisplayInAbilitySummary = default.PA_Gatekeeper_AnimaConsumeDontDisplayInAbilitySummary;
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.iNumPoints = default.PA_Gatekeeper_AnimaConsume_ActionPoints;
@@ -656,6 +764,11 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	// Shooter Conditions
 	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
 
+	// Cooldown on the ability
+	Cooldown = new class'X2AbilityCooldown';
+	Cooldown.iNumTurns = default.PA_Gatekeeper_AnimaConsume_Cooldown;
+	Template.AbilityCooldown = Cooldown;
+
 	// Set up conditions for Open check.
 	IsOpen = new class'X2Condition_UnitValue';
 	IsOpen.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact, , , 'AA_GatekeeperClosed');
@@ -668,7 +781,7 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	TargetPropertyCondition.ExcludeFriendlyToSource = default.PA_Gatekeeper_AnimaConsume_ExcludeFriendlyToSource;
 	TargetPropertyCondition.ExcludeHostileToSource = default.PA_Gatekeeper_AnimaConsume_ExcludeHostileToSource;
 	TargetPropertyCondition.FailOnNonUnits = true;
-	TargetPropertyCondition.RequireWithinRange = true;
+	TargetPropertyCondition.RequireWithinRange = default.PA_Gatekeeper_AnimaConsume_RequireWithinRange;
 	TargetPropertyCondition.WithinRange = default.PA_Gatekeeper_AnimaConsume_WithinRange;
 
 	Template.AbilityTargetConditions.AddItem(TargetPropertyCondition);
@@ -709,7 +822,7 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	TargetPropertyCondition.ExcludeOrganic = default.PA_Gatekeeper_AnimaConsume_ExcludeOrganic;
 	TargetPropertyCondition.ExcludeAlien = default.PA_Gatekeeper_AnimaConsume_ExcludeAlien;
 	TargetPropertyCondition.ExcludeCivilian = default.PA_Gatekeeper_AnimaConsume_ExcludeCivilian;
-	TargetPropertyCondition.ExcludeCosmetic = default.PA_Gatekeeper_AnimaConsume_ExcludeCosmetic;
+	TargetPropertyCondition.ExcludeCosmetic = true;
 	TargetPropertyCondition.ExcludeFriendlyToSource = default.PA_Gatekeeper_AnimaConsume_ExcludeFriendlyToSource;
 	TargetPropertyCondition.ExcludeHostileToSource = default.PA_Gatekeeper_AnimaConsume_ExcludeHostileToSource;
 	TargetPropertyCondition.FailOnNonUnits = default.PA_Gatekeeper_AnimaConsume_FailOnNonUnits;
@@ -833,6 +946,7 @@ static function X2AbilityTemplate CreatePA_AnimaGateAbility()
 {
 	local X2AbilityTemplate                 Template;	
 	local X2AbilityCost_ActionPoints        ActionPointCost;
+	local X2AbilityCooldown 			   Cooldown;
 	local X2Effect_ApplyWeaponDamage        WeaponDamageEffect;
 	local array<name>                       SkipExclusions;
 	local X2Condition_Visibility            TargetVisibilityCondition;
@@ -849,6 +963,13 @@ static function X2AbilityTemplate CreatePA_AnimaGateAbility()
 	Template.AbilitySourceName = 'eAbilitySource_Standard';                                       // color of the icon
 	// Activated by a button press; additionally, tells the AI this is an activatable
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
+
+	Template.bDontDisplayInAbilitySummary = default.PA_Gatekeeper_AnimaGateDontDisplayInAbilitySummary;
+
+	// Cooldown on the ability
+	Cooldown = new class'X2AbilityCooldown';
+	Cooldown.iNumTurns = default.PA_Gatekeeper_AnimaGateCooldown;
+	Template.AbilityCooldown = Cooldown;
 
 	// *** VALIDITY CHECKS *** //
 	//  Normal effect restrictions (except disoriented)
