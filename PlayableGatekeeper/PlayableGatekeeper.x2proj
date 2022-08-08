@@ -55,8 +55,10 @@
     <Content Include="Localization\PlayableGatekeeper.int" />
     <Content Include="Src\PlayableGatekeeper\Classes\PA_GatekeeperTech.uc" />
     <Content Include="Src\PlayableGatekeeper\Classes\X2Character_PlayableGateKeeper.uc" />
-    <Content Include="Src\PlayableGatekeeper\Classes\X2Item_PAWeapons.uc" />
     <Content Include="Src\PlayableGatekeeper\Classes\XGCharacterGenerator_Gatekeeper.uc" />
     <Content Include="ReadMe.md" />
+    <Content Include="Config\XcomGameData_AbilityData.ini" />
+    <Content Include="Src\PlayableGatekeeper\Classes\X2Item_PAGatekeeperWeapons.uc" />
+    <Content Include="Src\PlayableGatekeeper\Classes\X2PA_GatekeeperAbility.uc" />
   </ItemGroup>
 </Project>

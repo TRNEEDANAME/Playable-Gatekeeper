@@ -1,7 +1,7 @@
 class X2Item_PAGatekeeperWeapons extends X2Item config(GameData_WeaponsData);
 
 // Gatekeeper Gun
-var config WeaponDamageValue PA_GatekeeperBaseDamage;
+var config array <WeaponDamageValue> PA_GatekeeperBaseDamage;
 var config array<int> PA_GatekeeperRangeAccuracy;
 var config int PA_GatekeeperClipSize;
 var config int PA_GatekeeperSoundRange;
@@ -11,7 +11,6 @@ var config int PA_GatekeeperIdealRange;
 // Gatekeeper Psi damage
 var config array <WeaponDamageValue> PA_GatekeeperPsiExtraDamage;
 
-	var config int PA_GatekeeperClipSize;
 
 static function array<X2DataTemplate> CreateTemplates()
 {

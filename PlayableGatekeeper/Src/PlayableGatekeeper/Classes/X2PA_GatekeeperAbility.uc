@@ -1,6 +1,6 @@
-class X2PA_GatekeeperAbility config (GameData_AbilityData);
+class X2PA_GatekeeperAbility extends X2Ability config (GameData_AbilityData);
 
-var name PA_OpenCloseAbilityName;		// Ability name referenced in code/script
+var name PA_OpenAbilityName;		// Ability name referenced in code/script
 var name PA_ToggledOpenCloseUnitValue;	// Unit value name referenced in code/script
 var name PA_ClosedEffectName;			// Closed effect name referenced in code/script
 
@@ -11,7 +11,7 @@ var config StatCheck RETRACT_CHECK;
 // Initial State ability 
 // ================================================================
 
-//* Initial State ability boolean */
+//* Initial State ability boolean
 
 var config bool PA_Gatekeeper_InitialStateDontDisplayInAbilitySummary;
 
@@ -20,18 +20,18 @@ var config bool PA_Gatekeeper_InitialStateDontDisplayInAbilitySummary;
 // Open ability
 // ================================================================
 
-//* ----------- Open ability int ----------- */
+//* ----------- Open ability int -----------
 var config int PA_Gatekeeper_OpenAbilityCost;
 var config int PA_Gatekeeper_OpenCooldown;
 
-//* ----------- Open ability boolean ----------- */
+//* ----------- Open ability boolean -----------
 var config bool PA_Gatekeeper_IsOpenAbilityFreeCost;
 
-//* ----------- Open ability const ----------- */
+//* ----------- Open ability const -----------
 const PA_Gatekeeper_Closed_Value=0;
 const PA_Gatekeeper_Open_Value=1;
 
-//* ----------- Open ability name ----------- */
+//* ----------- Open ability name -----------
 var private name PA_OpenedEffectName;
 
 
@@ -39,11 +39,16 @@ var private name PA_OpenedEffectName;
 // Close ability
 // ================================================================
 
-//* ----------- Close ability int ----------- */
+//* ----------- Close ability int ----------- 
 var config int PA_Gatekeeper_CloseAbilityCost;
 var config int PA_Gatekeeper_CloseCooldown;
 
-//* ----------- Close ability boolean ----------- */
+var config int PA_Gatekeeper_ClosedArmor_Adjust;
+var config int PA_Gatekeeper_ClosedArmorChance_Adjust;
+var config int PA_Gatekeeper_ClosedSight_Adjust;
+var config int PA_Gatekeeper_ClosedDefense_Adjust;
+
+//* ----------- Close ability boolean ----------- 
 var config bool PA_Gatekeeper_CloseMoveBegin_DontDisplayInAbilitySummary;
 var config bool PA_Gatekeeper_IsCloseAbilityFreeCost;
 
@@ -52,17 +57,21 @@ var config bool PA_Gatekeeper_IsCloseAbilityFreeCost;
 // Anima Inversion ability
 // ================================================================
 
-//* ----------- Anima Inversion int ----------- */
+//* ----------- Anima Inversion ability damage -----------
+
+var config array <WeaponDamageValue> PA_Gatekeeper_AnimaInversion_Damage;
+
+//* ----------- Anima Inversion int ----------- 
 var config int PA_Gatekeeper_AnimaInversion_ActionPointCost;
 var config int PA_Gatekeeper_AnimaInversion_Cooldown;
 var config int PA_Gatekeeper_AnimaInversion_Radius;
 var config int PA_Gatekeeper_AnimaInversion_AbilityRange;
 
-//* ----------- FX value ----------- */
+//* ----------- FX value ----------- 
 var config int PA_Gatekeeper_AnimaInversion_StartAnimationMinDelaySec;
 var config int PA_Gatekeeper_AnimaInversion_StartAnimationMaxDelaySec;
 
-//* ----------- Anima Inversion boolean ----------- */
+//* ----------- Anima Inversion boolean ----------- 
 var config bool PA_Gatekeeper_DoesAnimaInversion_ConsumeAllPoints;
 var config bool PA_Gatekeeper_DoesAnimaInversion_IgnoreBlockingCover;
 var config bool PA_Gatekeeper_DoesAnimaInversion_RestrictToSquadsightRange;
@@ -70,7 +79,7 @@ var config bool PA_Gatekeeper_DoesAnimaInversion_IgnoreArmor;
 var config bool PA_Gatekeeper_DoesAnimaInversion_AlwaysKillsCivilians;
 var config bool PA_Gatekeeper_AnimaInversionDontDisplayInAbilitySummary;
 
-//* ----------- Anima Inversion Exclude rules ----------- */
+//* ----------- Anima Inversion Exclude rules ----------- 
 var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeDead;
 var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeAlive;
 var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeFriendlyToSource;
@@ -85,21 +94,21 @@ var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeCivilian;
 // Anima Consume ability
 // ================================================================
 
-//* ----------- Anima Consume int ----------- */
+//* ----------- Anima Consume int ----------- 
 
 var config int PA_Gatekeeper_AnimaConsume_ActionPoints;
 var config int PA_Gatekeeper_AnimaConsume_LifeStealMultiplier;
 var config int PA_Gatekeeper_AnimaConsume_Cooldown;
 var config int PA_Gatekeeper_AnimaConsume_WithinRange;
 
-//* ----------- Anima Consume boolean ----------- */
-var config int PA_Gatekeeper_DoesAnimaConsume_ConsumeAllPoints;
+//* ----------- Anima Consume boolean ----------- 
+var config bool PA_Gatekeeper_DoesAnimaConsume_ConsumeAllPoints;
 var config bool PA_Gatekeeper_AnimaConsume_RequireWithinRange;
 var config bool PA_Gatekeeper_AnimaConsume_FailOnNonUnits;
 var config bool PA_Gatekeeper_AnimaConsumeDontDisplayInAbilitySummary;
 
 
-//* ----------- Anima Consume Exlude rules ----------- */
+//* ----------- Anima Consume Exlude rules ----------- 
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeDead;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeFriendlyToSource;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeHostileToSource;
@@ -114,11 +123,11 @@ var config bool PA_Gatekeeper_AnimaConsume_ExcludeCivilian;
 // Anima Gate ability
 // ================================================================
 
-//* ----------- Anima Gate int ----------- */
+//* ----------- Anima Gate int ----------- 
 var config int PA_Gatekeeper_AnimaGate_ActionPointCost;
 var config int PA_Gatekeeper_AnimaGateCooldown;
 
-//* ----------- Anima Gate boolean ----------- */
+//* ----------- Anima Gate boolean ----------- 
 var config bool PA_Gatekeeper_AnimaGateDontDisplayInAbilitySummary;
 var config bool PA_Gatekeeper_DoesAnimaGateAllowSquadsight;
 var config bool PA_Gatekeeper_DoesAnimaGate_ConsumeAllPoints;
@@ -314,8 +323,8 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 	// Closed effects.  Requires condition IsOpen
 
 	// 1. Set Closed effect.
-	CloseGatekeeperEffect = class'X2StatusEffects'.static.CreatePA_GatekeeperClosedEffect();
-	Template.AddTargetEffect(CloseGatekeeperEffect);
+	PA_CloseGatekeeperEffect = CreatePA_GatekeeperClosedEffect();
+	Template.AddTargetEffect(PA_CloseGatekeeperEffect);
 
 	// 2. Set value to Closed.
 	SetClosedValue = new class'X2Effect_SetUnitValue';
@@ -351,7 +360,7 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseMoveBeginAbility()
 	local X2AbilityTemplate                 Template;
 	local X2AbilityTrigger_EventListener    EventListener;
 
-	Template = CreateGatekeeperCloseAbility('GatekeeperCloseMoveBegin');
+	Template = CreatePA_GatekeeperCloseAbility('GatekeeperCloseMoveBegin');
 	Template.eAbilityIconBehaviorHUD = eAbilityIconBehavior_NeverShow;
 
 	Template.bDontDisplayInAbilitySummary = default.PA_Gatekeeper_CloseMoveBegin_DontDisplayInAbilitySummary;
@@ -555,7 +564,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 
 	// Everything in the blast radius receives psi damage
 	PsiDamageEffect = new class'X2Effect_ApplyWeaponDamage';
-	PsiDamageEffect.EffectDamageValue = class'X2Item_DefaultWeapons'.default.PA_Gatekeeper_AnimaInversion_Damage;
+	PsiDamageEffect.EffectDamageValue = .default.PA_Gatekeeper_AnimaInversion_Damage;
 	PsiDamageEffect.EffectDamageValue.DamageType = 'Psi';
 	PsiDamageEffect.bIgnoreArmor = default.PA_Gatekeeper_DoesAnimaInversion_IgnoreArmor;
 	PsiDamageEffect.bAlwaysKillsCivilians = default.PA_Gatekeeper_DoesAnimaInversion_AlwaysKillsCivilians;
@@ -1036,7 +1045,7 @@ static function X2AbilityTemplate CreatePA_AnimaGateAbility()
 
 DefaultProperties
 {
-	PA_OpenCloseAbilityName="Open/ClosedState"
+	PA_OpenAbilityName="Open/ClosedState"
 	PA_ToggledOpenCloseUnitValue="PA_ToggledOpenCloseUnitValue"
 	PA_ClosedEffectName="GatekeeperClosedEffect"
 	PA_OpenedEffectName="GatekeeperOpenEffect"
