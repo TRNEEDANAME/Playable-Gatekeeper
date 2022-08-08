@@ -1,7 +1,7 @@
 class X2Item_PAGatekeeperWeapons extends X2Item config(GameData_WeaponsData);
 
 // Gatekeeper Gun
-var config array <WeaponDamageValue> PA_GatekeeperBaseDamage;
+var config WeaponDamageValue PA_GatekeeperBaseDamage;
 var config array<int> PA_GatekeeperRangeAccuracy;
 var config int PA_GatekeeperClipSize;
 var config int PA_GatekeeperSoundRange;
@@ -9,7 +9,7 @@ var config int PA_GatekeeperEnvDamage;
 var config int PA_GatekeeperIdealRange;
 
 // Gatekeeper Psi damage
-var config array <WeaponDamageValue> PA_GatekeeperPsiExtraDamage;
+var config WeaponDamageValue PA_GatekeeperPsiExtraDamage;
 
 
 static function array<X2DataTemplate> CreateTemplates()
@@ -79,7 +79,7 @@ static function X2DataTemplate CreateTemplate_GatekeeperPsiAmp()
 
 	Template.Abilities.AddItem('PsiDimensionalRift');
 	
-	Template.ExtraDamage = default.PA_GatekeeperPsiExtraDamage; 
+	Template.BaseDamage = default.PA_GatekeeperPsiExtraDamage; 
 
 	// PsiAmpT3_AbilityDamage = (Damage=7, Spread = 1, PlusOne = 0, Crit = 0, Pierce = 0, Tag = "Soulfire", DamageType="Psi")
 	// PsiAmpT3_AbilityDamage = (Damage=4, Spread = 1, PlusOne = 75, Crit = 0, Pierce = 0, Tag = "VoidRift", DamageType="Psi")

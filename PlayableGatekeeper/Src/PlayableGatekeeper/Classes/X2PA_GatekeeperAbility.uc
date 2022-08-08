@@ -25,7 +25,7 @@ var config int PA_Gatekeeper_OpenAbilityCost;
 var config int PA_Gatekeeper_OpenCooldown;
 
 //* ----------- Open ability boolean -----------
-var config bool PA_Gatekeeper_IsOpenAbilityFreeCost;
+var config bool PA_Gatekeeper_PA_IsOpenAbilityFreeCost;
 
 //* ----------- Open ability const -----------
 const PA_Gatekeeper_Closed_Value=0;
@@ -59,7 +59,7 @@ var config bool PA_Gatekeeper_IsCloseAbilityFreeCost;
 
 //* ----------- Anima Inversion ability damage -----------
 
-var config array <WeaponDamageValue> PA_Gatekeeper_AnimaInversion_Damage;
+var config WeaponDamageValue PA_Gatekeeper_AnimaInversion_Damage;
 
 //* ----------- Anima Inversion int ----------- 
 var config int PA_Gatekeeper_AnimaInversion_ActionPointCost;
@@ -132,6 +132,23 @@ var config bool PA_Gatekeeper_AnimaGateDontDisplayInAbilitySummary;
 var config bool PA_Gatekeeper_DoesAnimaGateAllowSquadsight;
 var config bool PA_Gatekeeper_DoesAnimaGate_ConsumeAllPoints;
 
+// ================================================================
+// Domination ability
+// ================================================================
+
+//* ----------- Domination int -----------
+var config int PA_Domination_ActionPointCost;
+var config int PA_Domination_InitialCharges;
+var config int PA_Domination_NumChargesCost;
+var config int PA_Domination_OnlyOnHitCost;
+var config int PA_Domination_Cooldown;
+var config int PA_Domination_TargetRadius;
+
+//* ----------- Domination boolean -----------
+var config bool PA_Domination_DontDisplayInAbilitySummary;
+var config bool PA_Domination_ConsumeAllPoints;
+var config bool PA_Domination_DoNotApplyCooldownOnHit;
+
 static function array<X2DataTemplate> CreateTemplates()
 {
 	local array<X2DataTemplate> Templates;
@@ -148,6 +165,7 @@ static function array<X2DataTemplate> CreateTemplates()
 	Templates.AddItem(CreatePA_MassPsiReanimationAbility());
 	Templates.AddItem(CreatePA_Gatekeeper_AnimaConsumeAbility());
 	Templates.AddItem(CreatePA_AnimaGateAbility());
+	Templates.AddItem(CreatePA_Domination());
 
 	return Templates;
 }
@@ -182,12 +200,12 @@ static function X2AbilityTemplate CreatePA_InitialStateAbility()
 	Template.AbilityTriggers.AddItem(Trigger);
 
 	// Set initial effect - Closed persistent effect.
-	CloseGatekeeperEffect = class'X2StatusEffects'.static.CreatePA_GatekeeperClosedEffect();
+	CloseGatekeeperEffect = class'X2StatusEffect_PA_Gatekeeper'.static.CreatePA_GatekeeperClosedEffect();
 	Template.AddTargetEffect(CloseGatekeeperEffect);
 
 	// Set initial effect - Closed value.
 	SetClosedValue = new class'X2Effect_SetUnitValue';
-	SetClosedValue.UnitName = default.PA_OpenCloseAbilityName;
+	SetClosedValue.UnitName = default.PA_OpenAbilityName;
 	SetClosedValue.NewValueToSet = PA_Gatekeeper_Closed_Value;
 	SetClosedValue.CleanupType = eCleanup_BeginTactical;
 	Template.AddTargetEffect(SetClosedValue);
@@ -229,7 +247,7 @@ static function X2AbilityTemplate CreatePA_GatekeeperOpenAbility()
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.iNumPoints = default.PA_Gatekeeper_OpenAbilityCost;
-	ActionPointCost.bFreeCost = default.PA_Gatekeeper_IsOpenAbilityFreeCost;
+	ActionPointCost.bFreeCost = default.PA_Gatekeeper_PA_IsOpenAbilityFreeCost;
 	Template.AbilityCosts.AddItem(ActionPointCost);
 
 	Template.AbilityToHitCalc = default.DeadEye;
@@ -245,7 +263,7 @@ static function X2AbilityTemplate CreatePA_GatekeeperOpenAbility()
 	
 	// Set up conditions for Closed check.
 	IsClosed = new class'X2Condition_UnitValue';
-	IsClosed.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Closed_Value, eCheck_Exact);
+	IsClosed.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Closed_Value, eCheck_Exact);
 	Template.AbilityShooterConditions.AddItem( IsClosed );
 	Template.AbilityShooterConditions.AddItem( default.LivingShooterProperty );
 
@@ -287,8 +305,8 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 	local X2AbilityCooldown                 Cooldown;
 	local X2AbilityTrigger_PlayerInput      InputTrigger;
 	local X2Effect_SetUnitValue				SetClosedValue, SetToggledValue;
-	local X2Condition_UnitValue				IsOpen;
-	local X2Effect_PersistentStatChange		CloseGatekeeperEffect;
+	local X2Condition_UnitValue				PA_IsOpen;
+	local X2Effect_PersistentStatChange		PA_CloseGatekeeperEffect;
 	local X2Effect_RemoveEffects            RemoveOpenedEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, AbilityName);
@@ -308,9 +326,9 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 	Template.AbilityTriggers.AddItem(InputTrigger);
 
 	// Set up conditions for Open check.
-	IsOpen = new class'X2Condition_UnitValue';
-	IsOpen.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact);
-	Template.AbilityShooterConditions.AddItem(IsOpen);
+	PA_IsOpen = new class'X2Condition_UnitValue';
+	PA_IsOpen.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact);
+	Template.AbilityShooterConditions.AddItem(PA_IsOpen);
 
 	Template.AbilityShooterConditions.AddItem( default.LivingShooterProperty );
 
@@ -320,15 +338,15 @@ static function X2AbilityTemplate CreatePA_GatekeeperCloseAbility(optional Name 
 	Template.AbilityCooldown = Cooldown;
 
 	// ------------
-	// Closed effects.  Requires condition IsOpen
+	// Closed effects.  Requires condition PA_IsOpen
 
 	// 1. Set Closed effect.
-	PA_CloseGatekeeperEffect = CreatePA_GatekeeperClosedEffect();
+	PA_CloseGatekeeperEffect = class'X2StatusEffect_PA_Gatekeeper'.static.CreatePA_GatekeeperClosedEffect();
 	Template.AddTargetEffect(PA_CloseGatekeeperEffect);
 
 	// 2. Set value to Closed.
 	SetClosedValue = new class'X2Effect_SetUnitValue';
-	SetClosedValue.UnitName = default.PA_OpenCloseAbilityName;
+	SetClosedValue.UnitName = default.PA_OpenAbilityName;
 	SetClosedValue.NewValueToSet = PA_Gatekeeper_Closed_Value;
 	SetClosedValue.CleanupType = eCleanup_BeginTactical;
 	Template.AddTargetEffect(SetClosedValue);
@@ -413,7 +431,7 @@ simulated function PA_GatekeeperOpenClose_BuildVisualization(XComGameState Visua
 		GatekeeperTransition = X2Action_AnimSetTransition(class'X2Action_AnimSetTransition'.static.AddToVisualizationTree(ActionMetadata, Context, false, ActionMetadata.LastActionAdded));
 		GatekeeperTransition.Params.AnimName = 'NO_Close'; // Closed by default.
 
-		if( Gatekeeper.GetUnitValue(PA_OpenCloseAbilityName, OpenClosedValue) )
+		if(Gatekeeper.GetUnitValue(PA_OpenAbilityName, OpenClosedValue) )
 		{
 			if( OpenClosedValue.fValue == PA_Gatekeeper_Open_Value )
 			{
@@ -456,27 +474,27 @@ static function X2AbilityTemplate CreatePA_RetractDamageListenerAbility()
 	return Template;
 }
 
-// Retract has a chance to close based on a stat contest btwn damage amount and Gatekeeper will.
+// Retract has a chance to close based on a stat contest btwn damage amount and PA_Gatekeeper will.
 static function X2AbilityTemplate CreatePA_RetractAbility()
 {
 	local X2AbilityTemplate Template;
-	local X2Condition_UnitValue				IsOpen;
+	local X2Condition_UnitValue				PA_IsOpen;
 	local X2Effect_SetUnitValue				SetClosedValue;
-	local X2Effect_PersistentStatChange		CloseGatekeeperEffect;
+	local X2Effect_PersistentStatChange		ClosePA_GatekeeperEffect;
 	local X2Effect_RemoveEffects            RemoveOpenedEffect;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_Retract');
-	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_gatekeeper_retract";
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_PA_Gatekeeper_retract";
 
 	Template.eAbilityIconBehaviorHUD = EAbilityIconBehavior_NeverShow;
 	Template.Hostility = eHostility_Defensive;
 
-	Template.AdditionalAbilities.AddItem('RetractDamageListener');
+	Template.AdditionalAbilities.AddItem('PA_RetractDamageListener');
 
-	IsOpen = new class'X2Condition_UnitValue';
-	IsOpen.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact);
+	PA_IsOpen = new class'X2Condition_UnitValue';
+	PA_IsOpen.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact);
 
-	Template.AbilityShooterConditions.AddItem(IsOpen);
+	Template.AbilityShooterConditions.AddItem(PA_IsOpen);
 	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
 
 	Template.AbilityTriggers.AddItem(new class'X2AbilityTrigger_Placeholder');
@@ -484,11 +502,11 @@ static function X2AbilityTemplate CreatePA_RetractAbility()
 	Template.AbilityTargetStyle = default.SelfTarget;
 
 	// 1. Set Closed effect.  
-	CloseGatekeeperEffect = class'X2StatusEffects'.static.CreateGatekeeperClosedEffect();
-	Template.AddTargetEffect(CloseGatekeeperEffect);
+	ClosePA_GatekeeperEffect = class'X2StatusEffect_PA_Gatekeeper'.static.CreatePA_GatekeeperClosedEffect();
+	Template.AddTargetEffect(ClosePA_GatekeeperEffect);
 	// 2. Set value to Closed.
 	SetClosedValue = new class'X2Effect_SetUnitValue';
-	SetClosedValue.UnitName = default.PA_OpenCloseAbilityName;
+	SetClosedValue.UnitName = default.PA_OpenAbilityName;
 	SetClosedValue.NewValueToSet = PA_Gatekeeper_Closed_Value;
 	SetClosedValue.CleanupType = eCleanup_BeginTactical;
 	Template.AddTargetEffect(SetClosedValue);
@@ -516,7 +534,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 	local X2Condition_UnitProperty UnitPropertyCondition;
 	local X2Condition_UnitValue UnitValue;
 	local X2Effect_SpawnPsiZombie SpawnZombieEffect;
-	local X2Condition_UnitValue	IsOpen;
+	local X2Condition_UnitValue	PA_IsOpen;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_AnimaInversion');
 
@@ -542,9 +560,9 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 	Template.AddShooterEffectExclusions();
 
 	// Only available if the Gatekeeper is Open
-	IsOpen = new class'X2Condition_UnitValue';
-	IsOpen.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact, , , 'AA_GatekeeperClosed');
-	Template.AbilityShooterConditions.AddItem(IsOpen);
+	PA_IsOpen = new class'X2Condition_UnitValue';
+	PA_IsOpen.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact, , , 'AA_GatekeeperClosed');
+	Template.AbilityShooterConditions.AddItem(PA_IsOpen);
 
 	RadiusMultiTarget = new class'X2AbilityMultiTarget_Radius';
 	RadiusMultiTarget.fTargetRadius = default.PA_Gatekeeper_AnimaInversion_Radius;
@@ -564,7 +582,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 
 	// Everything in the blast radius receives psi damage
 	PsiDamageEffect = new class'X2Effect_ApplyWeaponDamage';
-	PsiDamageEffect.EffectDamageValue = .default.PA_Gatekeeper_AnimaInversion_Damage;
+	PsiDamageEffect.EffectDamageValue = default.PA_Gatekeeper_AnimaInversion_Damage;
 	PsiDamageEffect.EffectDamageValue.DamageType = 'Psi';
 	PsiDamageEffect.bIgnoreArmor = default.PA_Gatekeeper_DoesAnimaInversion_IgnoreArmor;
 	PsiDamageEffect.bAlwaysKillsCivilians = default.PA_Gatekeeper_DoesAnimaInversion_AlwaysKillsCivilians;
@@ -634,7 +652,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 	Template.CustomFireAnim = 'NO_AnimaInversion';
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildInterruptGameStateFn = TypicalAbility_BuildInterruptGameState;
-	Template.BuildVisualizationFn = AnimaInversion_BuildVisualization;
+	Template.BuildVisualizationFn = PA_AnimaInversion_BuildVisualization;
 	Template.CinescriptCameraType = "Gatekeeper_AnimaInversion";
 //BEGIN AUTOGENERATED CODE: Template Overrides 'AnimaInversion'
 	Template.bFrameEvenWhenUnitIsHidden = true;
@@ -744,7 +762,7 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	local X2AbilityTemplate Template;
 	local X2AbilityCost_ActionPoints ActionPointCost;
 	local X2AbilityCooldown Cooldown;
-	local X2Condition_UnitValue	IsOpen;
+	local X2Condition_UnitValue	PA_IsOpen;
 	local X2Condition_UnitProperty TargetPropertyCondition;
 	local X2Effect_ApplyWeaponDamage WeaponDamageEffect;
 	local X2Effect_LifeSteal LifeStealEffect;
@@ -778,9 +796,9 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	Template.AbilityCooldown = Cooldown;
 
 	// Set up conditions for Open check.
-	IsOpen = new class'X2Condition_UnitValue';
-	IsOpen.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact, , , 'AA_GatekeeperClosed');
-	Template.AbilityShooterConditions.AddItem(IsOpen);
+	PA_IsOpen = new class'X2Condition_UnitValue';
+	PA_IsOpen.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact, , , 'AA_GatekeeperClosed');
+	Template.AbilityShooterConditions.AddItem(PA_IsOpen);
 
 	// Target Conditions
 	// This may target friendly or hostile units within melee range
@@ -847,7 +865,7 @@ static function X2AbilityTemplate CreatePA_Gatekeeper_AnimaConsumeAbility()
 	Template.CustomFireAnim = 'NO_AnimaConsume';
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildInterruptGameStateFn = TypicalAbility_BuildInterruptGameState;
-	Template.BuildVisualizationFn = AnimaConsume_BuildVisualization;
+	Template.BuildVisualizationFn = PA_Gatekeeper_AnimaConsume_BuildVisualization;
 	Template.CinescriptCameraType = "Gatekeeper_Probe";
 
 	Template.LostSpawnIncreasePerUse = class'X2AbilityTemplateManager'.default.StandardShotLostSpawnIncreasePerUse;
@@ -986,7 +1004,7 @@ static function X2AbilityTemplate CreatePA_AnimaGateAbility()
 
 	// Set up conditions for Closed check.
 	IsClosed = new class'X2Condition_UnitValue';
-	IsClosed.AddCheckValue(default.PA_OpenCloseAbilityName, PA_Gatekeeper_Closed_Value, eCheck_Exact, , , 'AA_GatekeeperOpened');
+	IsClosed.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Closed_Value, eCheck_Exact, , , 'AA_GatekeeperOpened');
 	Template.AbilityShooterConditions.AddItem( IsClosed );
 
 	// Targeting Details
@@ -1042,6 +1060,109 @@ static function X2AbilityTemplate CreatePA_AnimaGateAbility()
 
 	return Template;	
 }
+
+static function X2AbilityTemplate CreatePA_Domination()
+{
+	local X2AbilityTemplate             Template;
+	local X2AbilityCost_ActionPoints    ActionPointCost;
+	local X2AbilityMultiTarget_Radius 	RadiusMultiTarget;
+	local X2Condition_UnitProperty      UnitPropertyCondition;
+	local X2Effect_MindControl          MindControlEffect;
+	local X2Effect_StunRecover			StunRecoverEffect;
+	local X2Condition_UnitEffects       EffectCondition;
+	local X2AbilityCharges              Charges;
+	local X2AbilityCost_Charges         ChargeCost;
+	local X2AbilityCooldown             Cooldown;
+	local X2Condition_UnitImmunities	UnitImmunityCondition;
+	local X2AbilityToHitCalc_StatCheck_UnitVsUnit StatCheck;
+
+	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_Domination');
+
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_domination";
+	Template.AbilitySourceName = 'eAbilitySource_Psionic';
+	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.CLASS_MAJOR_PRIORITY;
+	Template.Hostility = eHostility_Offensive;
+	Template.bDontDisplayInAbilitySummary = default.PA_Domination_DontDisplayInAbilitySummary;,
+
+	ActionPointCost = new class'X2AbilityCost_ActionPoints';
+	ActionPointCost.iNumPoints = default.PA_Domination_ActionPointCost;
+	ActionPointCost.bConsumeAllPoints = default.PA_Domination_ConsumeAllPoints;
+	Template.AbilityCosts.AddItem(ActionPointCost);
+
+	Charges = new class'X2AbilityCharges';
+	Charges.InitialCharges = default.PA_Domination_InitialCharges;
+	Template.AbilityCharges = Charges;
+
+	ChargeCost = new class'X2AbilityCost_Charges';
+	ChargeCost.NumCharges = default.PA_Domination_NumChargesCost;
+	ChargeCost.bOnlyOnHit = default.PA_Domination_OnlyOnHitCost;
+	Template.AbilityCosts.AddItem(ChargeCost);
+
+	Cooldown = new class'X2AbilityCooldown';
+	Cooldown.iNumTurns = default.PA_Domination_Cooldown;
+	Cooldown.bDoNotApplyOnHit = default.PA_Domination_DoNotApplyCooldownOnHit;
+	Template.AbilityCooldown = Cooldown;
+	
+	StatCheck = new class'X2AbilityToHitCalc_StatCheck_UnitVsUnit';
+	StatCheck.BaseValue = 50;
+	Template.AbilityToHitCalc = StatCheck;
+
+	Template.AbilityShooterConditions.AddItem(default.LivingShooterProperty);
+	Template.AddShooterEffectExclusions();
+
+	UnitPropertyCondition = new class'X2Condition_UnitProperty';
+	UnitPropertyCondition.ExcludeDead = true;
+	UnitPropertyCondition.ExcludeFriendlyToSource = true;
+	UnitPropertyCondition.ExcludeRobotic = true;
+	UnitPropertyCondition.FailOnNonUnits = true;
+	Template.AbilityTargetConditions.AddItem(UnitPropertyCondition);	
+
+	RadiusMultiTarget = new class'X2AbilityMultiTarget_Radius';
+	RadiusMultiTarget.fTargetRadius = default.PA_Domination_TargetRadius;
+	RadiusMultiTarget.bIgnoreBlockingCover = true;
+	Template.AbilityMultiTargetStyle = RadiusMultiTarget;
+
+	EffectCondition = new class'X2Condition_UnitEffects';
+	EffectCondition.AddExcludeEffect(class'X2Effect_MindControl'.default.EffectName, 'AA_UnitIsMindControlled');
+	Template.AbilityTargetConditions.AddItem(EffectCondition);
+
+	UnitImmunityCondition = new class'X2Condition_UnitImmunities';
+	UnitImmunityCondition.AddExcludeDamageType('Mental');
+	UnitImmunityCondition.bOnlyOnCharacterTemplate = true;
+	Template.AbilityTargetConditions.AddItem(UnitImmunityCondition);
+
+	//  mind control target
+	MindControlEffect = class'X2StatusEffects'.static.CreateMindControlStatusEffect(1, false, true);
+	Template.AddTargetEffect(MindControlEffect);
+
+	StunRecoverEffect = class'X2StatusEffects'.static.CreateStunRecoverEffect();
+	Template.AddTargetEffect(StunRecoverEffect);
+
+	Template.AddTargetEffect(class'X2StatusEffects'.static.CreateMindControlRemoveEffects());
+
+	Template.AbilityTargetStyle = CursorTarget;
+	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
+
+	Template.ActivationSpeech = 'Domination';
+	Template.SourceMissSpeech = 'SoldierFailsControl';
+
+	Template.CustomFireAnim = 'HL_Psi_MindControl';
+	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
+	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
+	Template.BuildInterruptGameStateFn = TypicalAbility_BuildInterruptGameState;
+	Template.CinescriptCameraType = "Psionic_FireAtUnit";
+
+	Template.SuperConcealmentLoss = class'X2AbilityTemplateManager'.default.SuperConcealmentStandardShotLoss;
+	Template.ChosenActivationIncreasePerUse = class'X2AbilityTemplateManager'.default.StandardShotChosenActivationIncreasePerUse;
+	Template.LostSpawnIncreasePerUse = class'X2AbilityTemplateManager'.default.StandardShotLostSpawnIncreasePerUse;
+//BEGIN AUTOGENERATED CODE: Template Overrides 'Domination'
+	Template.bFrameEvenWhenUnitIsHidden = true;
+	Template.AbilityConfirmSound = "TacticalUI_ActivateAbility";
+//END AUTOGENERATED CODE: Template Overrides 'Domination'
+	
+	return Template;
+}
+
 
 DefaultProperties
 {
