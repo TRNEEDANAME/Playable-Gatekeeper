@@ -118,3 +118,24 @@ static function bool IsResearchInHistory(name ResearchName)
     }
     return false;
 }
+
+static function bool AbilityTagExpandHandler(string InString, out string OutString)
+{
+    local name Domination;
+
+    Domination = name(InString);
+
+    switch (Domination)
+    {
+    case 'Domination_Charge_Tag':
+        OutString = string(class'X2PA_GatekeeperAbility'.default.PA_Domination_InitialCharges);
+        return true;
+
+    case 'Domination_coolDown_Tag':
+        OutString = string(class'X2PA_GatekeeperAbility'.default.PA_Domination_Cooldown);
+        return true;
+
+    default:
+            return false;
+    }  
+}

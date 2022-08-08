@@ -140,7 +140,6 @@ var config bool PA_Gatekeeper_DoesAnimaGate_ConsumeAllPoints;
 var config int PA_Domination_ActionPointCost;
 var config int PA_Domination_InitialCharges;
 var config int PA_Domination_NumChargesCost;
-var config int PA_Domination_OnlyOnHitCost;
 var config int PA_Domination_Cooldown;
 var config int PA_Domination_TargetRadius;
 
@@ -148,6 +147,7 @@ var config int PA_Domination_TargetRadius;
 var config bool PA_Domination_DontDisplayInAbilitySummary;
 var config bool PA_Domination_ConsumeAllPoints;
 var config bool PA_Domination_DoNotApplyCooldownOnHit;
+var config bool PA_Domination_OnlyOnHitCost;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -1072,6 +1072,7 @@ static function X2AbilityTemplate CreatePA_Domination()
 	local X2Condition_UnitEffects       EffectCondition;
 	local X2AbilityCharges              Charges;
 	local X2AbilityCost_Charges         ChargeCost;
+	local X2AbilityTarget_Cursor 	CursorTarget;
 	local X2AbilityCooldown             Cooldown;
 	local X2Condition_UnitImmunities	UnitImmunityCondition;
 	local X2AbilityToHitCalc_StatCheck_UnitVsUnit StatCheck;
@@ -1082,7 +1083,7 @@ static function X2AbilityTemplate CreatePA_Domination()
 	Template.AbilitySourceName = 'eAbilitySource_Psionic';
 	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.CLASS_MAJOR_PRIORITY;
 	Template.Hostility = eHostility_Offensive;
-	Template.bDontDisplayInAbilitySummary = default.PA_Domination_DontDisplayInAbilitySummary;,
+	Template.bDontDisplayInAbilitySummary = default.PA_Domination_DontDisplayInAbilitySummary;
 
 	ActionPointCost = new class'X2AbilityCost_ActionPoints';
 	ActionPointCost.iNumPoints = default.PA_Domination_ActionPointCost;
