@@ -56,7 +56,7 @@ var config bool PA_Gatekeeper_IsCloseAbilityFreeCost;
 var config int PA_Gatekeeper_AnimaInversion_ActionPointCost;
 var config int PA_Gatekeeper_AnimaInversion_Cooldown;
 var config int PA_Gatekeeper_AnimaInversion_Radius;
-var config int PA_Gatekeeper_DoesAnimaInversion_AbilityRange;
+var config int PA_Gatekeeper_AnimaInversion_AbilityRange;
 
 //* ----------- FX value ----------- */
 var config int PA_Gatekeeper_AnimaInversion_StartAnimationMinDelaySec;
@@ -90,11 +90,11 @@ var config bool PA_Gatekeeper_DoesAnimaInversion_ExcludeCivilian;
 var config int PA_Gatekeeper_AnimaConsume_ActionPoints;
 var config int PA_Gatekeeper_AnimaConsume_LifeStealMultiplier;
 var config int PA_Gatekeeper_AnimaConsume_Cooldown;
+var config int PA_Gatekeeper_AnimaConsume_WithinRange;
 
 //* ----------- Anima Consume boolean ----------- */
 var config int PA_Gatekeeper_DoesAnimaConsume_ConsumeAllPoints;
 var config bool PA_Gatekeeper_AnimaConsume_RequireWithinRange;
-var config bool PA_Gatekeeper_AnimaConsume_WithinRange;
 var config bool PA_Gatekeeper_AnimaConsume_FailOnNonUnits;
 var config bool PA_Gatekeeper_AnimaConsumeDontDisplayInAbilitySummary;
 
@@ -105,7 +105,6 @@ var config bool PA_Gatekeeper_AnimaConsume_ExcludeFriendlyToSource;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeHostileToSource;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeRobotic;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeAlive;
-var config bool PA_Gatekeeper_AnimaConsume_ExcludeRobotic;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeOrganic;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeAlien;
 var config bool PA_Gatekeeper_AnimaConsume_ExcludeCivilian;
@@ -117,10 +116,10 @@ var config bool PA_Gatekeeper_AnimaConsume_ExcludeCivilian;
 
 //* ----------- Anima Gate int ----------- */
 var config int PA_Gatekeeper_AnimaGate_ActionPointCost;
+var config int PA_Gatekeeper_AnimaGateCooldown;
 
 //* ----------- Anima Gate boolean ----------- */
 var config bool PA_Gatekeeper_AnimaGateDontDisplayInAbilitySummary;
-var config bool PA_Gatekeeper_AnimaGateCooldown;
 var config bool PA_Gatekeeper_DoesAnimaGateAllowSquadsight;
 var config bool PA_Gatekeeper_DoesAnimaGate_ConsumeAllPoints;
 
@@ -547,7 +546,7 @@ static function X2AbilityTemplate CreatePA_MassPsiReanimationAbility()
 
 	CursorTarget = new class'X2AbilityTarget_Cursor';
 	CursorTarget.bRestrictToSquadsightRange = default.PA_Gatekeeper_DoesAnimaInversion_RestrictToSquadsightRange;
-	CursorTarget.FixedAbilityRange = default.PA_Gatekeeper_DoesAnimaInversion_AbilityRange;
+	CursorTarget.FixedAbilityRange = default.PA_Gatekeeper_AnimaInversion_AbilityRange;
 	Template.AbilityTargetStyle = CursorTarget;
 
 	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
