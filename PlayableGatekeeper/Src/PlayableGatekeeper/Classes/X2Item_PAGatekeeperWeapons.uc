@@ -47,7 +47,7 @@ static function X2DataTemplate CreateTemplate_PA_GatekeeperGun()
 	Template.DamageTypeTemplateName = 'Heavy';
 
 	Template.InventorySlot = eInvSlot_PrimaryWeapon;
-	Template.Abilities.AddItem('StandardShot');
+	Template.Abilities.AddItem('PA_AnimaGate');
 	Template.Abilities.AddItem('Overwatch');
 
 	Template.GameArchetype = "WP_Gatekeeper_Anima_Gate.WP_Gatekeeper_Anima_Gate";
