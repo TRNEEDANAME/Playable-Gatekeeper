@@ -69,5 +69,6 @@
     <Content Include="Config\XcomGameData_AbilityData.ini" />
     <Content Include="Src\PlayableGatekeeper\Classes\X2Item_PAGatekeeperWeapons.uc" />
     <Content Include="Src\PlayableGatekeeper\Classes\X2PA_GatekeeperAbility.uc" />
+    <Content Include="Config\XcomInfiltration.ini" />
   </ItemGroup>
 </Project>
