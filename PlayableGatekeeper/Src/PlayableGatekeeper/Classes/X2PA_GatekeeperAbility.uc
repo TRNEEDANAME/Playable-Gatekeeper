@@ -1076,6 +1076,8 @@ static function X2AbilityTemplate CreatePA_Domination()
 	local X2AbilityCooldown             Cooldown;
 	local X2Condition_UnitImmunities	UnitImmunityCondition;
 	local X2AbilityToHitCalc_StatCheck_UnitVsUnit StatCheck;
+	local X2Condition_UnitValue	PA_IsOpen;
+
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_Domination');
 
@@ -1123,6 +1125,11 @@ static function X2AbilityTemplate CreatePA_Domination()
 	RadiusMultiTarget.bIgnoreBlockingCover = true;
 	Template.AbilityMultiTargetStyle = RadiusMultiTarget;
 
+	// Only available if the Gatekeeper is Open
+	PA_IsOpen = new class'X2Condition_UnitValue';
+	PA_IsOpen.AddCheckValue(default.PA_OpenAbilityName, PA_Gatekeeper_Open_Value, eCheck_Exact, , , 'AA_GatekeeperClosed');
+	Template.AbilityShooterConditions.AddItem(PA_IsOpen);
+	
 	EffectCondition = new class'X2Condition_UnitEffects';
 	EffectCondition.AddExcludeEffect(class'X2Effect_MindControl'.default.EffectName, 'AA_UnitIsMindControlled');
 	Template.AbilityTargetConditions.AddItem(EffectCondition);
