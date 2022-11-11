@@ -53,7 +53,7 @@ static function X2DataTemplate CreateTemplate_PA_GatekeeperGun()
 	Template.GameArchetype = "WP_Gatekeeper_Anima_Gate.WP_Gatekeeper_Anima_Gate";
 	Template.iPhysicsImpulse = 5;
 	Template.CanBeBuilt = false;
-	Template.TradingPostValue = 30;
+	Template.StartingItem = true;
 	Template.bInfiniteItem = true;
 
 	return Template;
