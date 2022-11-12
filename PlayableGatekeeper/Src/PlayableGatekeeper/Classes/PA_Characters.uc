@@ -110,6 +110,18 @@ static function X2CharacterTemplate CreateTemplate_Gatekeeper()
 	CharTemplate.Abilities.AddItem('Berserk');
 	CharTemplate.Abilities.AddItem('Obsessed');
 	CharTemplate.Abilities.AddItem('Shattered');
+	CharTemplate.Abilities.AddItem('Interact_UseElevator');
+	CharTemplate.Abilities.AddItem('Interact_AtmosphereComputer');
+	CharTemplate.Abilities.AddItem('Interact_UseElevator');
+	CharTemplate.Abilities.AddItem('Interact_DLC2Transmitter');
+	CharTemplate.Abilities.AddItem('Interact_PlantBomb');
+	CharTemplate.Abilities.AddItem('Interact_TakeVial');
+	CharTemplate.Abilities.AddItem('Interact_StasisTube');
+	CharTemplate.Abilities.AddItem('Interact_MarkSupplyCrate');
+	CharTemplate.Abilities.AddItem('Interact_ActivateAscensionGate');
+	CharTemplate.Abilities.AddItem('PutDownUnit');
+	CharTemplate.Abilities.AddItem('PlaceEvacZone');
+	CharTemplate.Abilities.AddItem('LiftOffAvenger');
 
 	// bondmate abilities
 	//CharTemplate.Abilities.AddItem('BondmateResistantWill');

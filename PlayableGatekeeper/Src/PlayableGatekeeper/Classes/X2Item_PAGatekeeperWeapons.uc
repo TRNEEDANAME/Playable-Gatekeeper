@@ -50,6 +50,12 @@ static function X2DataTemplate CreateTemplate_PA_GatekeeperGun()
 	Template.Abilities.AddItem('PA_AnimaGate');
 	Template.Abilities.AddItem('Overwatch');
 
+	Template.Abilities.AddItem('StandardShot');
+	Template.Abilities.AddItem('Overwatch');
+	Template.Abilities.AddItem('OverwatchShot');
+	Template.Abilities.AddItem('Reload');
+	Template.Abilities.AddItem('HotLoadAmmo');
+
 	Template.GameArchetype = "WP_Gatekeeper_Anima_Gate.WP_Gatekeeper_Anima_Gate";
 	Template.iPhysicsImpulse = 5;
 	Template.CanBeBuilt = false;
