@@ -127,11 +127,11 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 
     switch (Domination)
     {
-    case 'Domination_Charge_Tag':
+    case 'PA_Domination_Charge_Tag':
         OutString = string(class'X2PA_GatekeeperAbility'.default.PA_Domination_InitialCharges);
         return true;
 
-    case 'Domination_coolDown_Tag':
+    case 'PA_Domination_coolDown_Tag':
         OutString = string(class'X2PA_GatekeeperAbility'.default.PA_Domination_Cooldown);
         return true;
 

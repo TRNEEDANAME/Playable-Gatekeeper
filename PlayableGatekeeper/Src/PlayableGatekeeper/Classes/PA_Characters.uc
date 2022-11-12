@@ -87,6 +87,14 @@ static function X2CharacterTemplate CreateTemplate_Gatekeeper()
 	// CharTemplate.Abilities.AddItem('AnimaInversion');
 	// CharTemplate.Abilities.AddItem('AnimaConsume');
 	//CharTemplate.Abilities.AddItem('AnimaGate');
+
+	Template.Abilities.AddItem('PsiDimensionalRift');
+	Template.Abilities.AddItem('PA_AnimaInversion');
+	Template.Abilities.AddItem('Soulfire');
+	Template.Abilities.AddItem('Inspire');
+	Template.Abilities.AddItem('NullLance');
+	Template.Abilities.AddItem('PA_Domination');
+
 	CharTemplate.Abilities.AddItem('DeathExplosion');
 	CharTemplate.Abilities.AddItem('KillSiredZombies');
 	

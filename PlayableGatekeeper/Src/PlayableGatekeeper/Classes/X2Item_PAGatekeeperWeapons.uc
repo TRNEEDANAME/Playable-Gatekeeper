@@ -78,7 +78,7 @@ static function X2DataTemplate CreateTemplate_GatekeeperPsiAmp()
 	Template.DamageTypeTemplateName = 'Psi';
 
 	Template.Abilities.AddItem('PsiDimensionalRift');
-	Template.Abilities.AddItem('AnimaInversion');
+	Template.Abilities.AddItem('PA_AnimaInversion');
 	Template.Abilities.AddItem('Soulfire');
 	Template.Abilities.AddItem('Inspire');
 	Template.Abilities.AddItem('NullLance');
