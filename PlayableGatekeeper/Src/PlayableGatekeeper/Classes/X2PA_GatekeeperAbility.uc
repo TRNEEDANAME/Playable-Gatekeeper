@@ -148,6 +148,7 @@ var config bool PA_Domination_DontDisplayInAbilitySummary;
 var config bool PA_Domination_ConsumeAllPoints;
 var config bool PA_Domination_DoNotApplyCooldownOnHit;
 var config bool PA_Domination_OnlyOnHitCost;
+var config bool PA_Gatekeeper_DoesDomination_ExcludeRobotic;
 
 static function array<X2DataTemplate> CreateTemplates()
 {
@@ -1072,7 +1073,6 @@ static function X2AbilityTemplate CreatePA_Domination()
 	local X2Condition_UnitEffects       EffectCondition;
 	local X2AbilityCharges              Charges;
 	local X2AbilityCost_Charges         ChargeCost;
-	local X2AbilityTarget_Cursor 	CursorTarget;
 	local X2AbilityCooldown             Cooldown;
 	local X2Condition_UnitImmunities	UnitImmunityCondition;
 	local X2AbilityToHitCalc_StatCheck_UnitVsUnit StatCheck;
@@ -1116,7 +1116,7 @@ static function X2AbilityTemplate CreatePA_Domination()
 	UnitPropertyCondition = new class'X2Condition_UnitProperty';
 	UnitPropertyCondition.ExcludeDead = true;
 	UnitPropertyCondition.ExcludeFriendlyToSource = true;
-	UnitPropertyCondition.ExcludeRobotic = true;
+	UnitPropertyCondition.ExcludeRobotic = default.PA_Gatekeeper_DoesDomination_ExcludeRobotic;
 	UnitPropertyCondition.FailOnNonUnits = true;
 	Template.AbilityTargetConditions.AddItem(UnitPropertyCondition);	
 
