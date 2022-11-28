@@ -1077,7 +1077,7 @@ static function X2AbilityTemplate CreatePA_Domination()
 	local X2Condition_UnitImmunities	UnitImmunityCondition;
 	local X2AbilityToHitCalc_StatCheck_UnitVsUnit StatCheck;
 	local X2Condition_UnitValue	PA_IsOpen;
-
+	local X2AbilityTarget_Cursor CursorTarget;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_Domination');
 
