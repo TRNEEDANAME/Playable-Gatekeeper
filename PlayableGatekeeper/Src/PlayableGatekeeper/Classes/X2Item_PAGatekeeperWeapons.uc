@@ -98,7 +98,6 @@ static function X2DataTemplate CreateTemplate_GatekeeperPsiAmp()
 
 	Template.StartingItem = true;
 	Template.CanBeBuilt = false;
-
 	Template.bInfiniteItem = true;
 
 	return Template;

@@ -22,8 +22,6 @@ static function X2CharacterTemplate CreateTemplate_Gatekeeper()
 
 	CharTemplate.strPawnArchetypes.Length = 0;
 	CharTemplate.strPawnArchetypes.AddItem("GameUnit_Gatekeeper.ARC_GameUnit_Gatekeeper");
-	CharTemplate.strPawnArchetypes.AddItem("GameUnit_Gatekeeper.ARC_GameUnit_Gatekeeper");
-	CharTemplate.strPawnArchetypes.AddItem("GameUnit_Gatekeeper.ARC_GameUnit_Gatekeeper");
 
 	CharTemplate.strMatineePackages.AddItem("CIN_Gatekeeper");
 	CharTemplate.strTargetingMatineePrefix = "CIN_Gatekeeper_FF_StartPos";
