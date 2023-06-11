@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Guid>d5d860c6-236a-4407-b266-c5c4d52d7fee</Guid>
     <Name>PlayableGatekeeper</Name>
-    <Description>Description of My XCOM 2 Mod.</Description>
+    <Description>Have a playable gulf ball</Description>
     <SteamPublishID>0</SteamPublishID>
     <AssemblyName>PlayableGatekeeper</AssemblyName>
     <RootNamespace>PlayableGatekeeper</RootNamespace>
@@ -58,10 +58,6 @@
     <Content Include="Localization\PlayableGatekeeper.int" />
     <Content Include="Src\PlayableGatekeeper\Classes\PA_GatekeeperTech.uc" />
     <Content Include="Src\PlayableGatekeeper\Classes\X2Character_PlayableGateKeeper.uc" />
-    <Content Include="Src\PlayableGatekeeper\Classes\X2Effect_PA_GatekeeperClosed.uc">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Src\PlayableGatekeeper\Classes\X2StatusEffect_PA_Gatekeeper.uc">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Src\PlayableGatekeeper\Classes\XGCharacterGenerator_Gatekeeper.uc" />

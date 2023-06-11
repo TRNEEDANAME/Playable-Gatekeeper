@@ -47,7 +47,7 @@ static function X2DataTemplate CreateTemplate_PA_GatekeeperGun()
 	Template.DamageTypeTemplateName = 'Heavy';
 
 	Template.InventorySlot = eInvSlot_PrimaryWeapon;
-	Template.Abilities.AddItem('PA_AnimaGate');
+	Template.Abilities.AddItem('AnimaGate');
 	Template.Abilities.AddItem('Overwatch');
 
 	Template.Abilities.AddItem('StandardShot');
@@ -84,7 +84,7 @@ static function X2DataTemplate CreateTemplate_GatekeeperPsiAmp()
 	Template.DamageTypeTemplateName = 'Psi';
 
 	Template.Abilities.AddItem('PsiDimensionalRift');
-	Template.Abilities.AddItem('PA_AnimaInversion');
+	Template.Abilities.AddItem('AnimaInversion');
 	Template.Abilities.AddItem('Soulfire');
 	Template.Abilities.AddItem('Inspire');
 	Template.Abilities.AddItem('NullLance');
