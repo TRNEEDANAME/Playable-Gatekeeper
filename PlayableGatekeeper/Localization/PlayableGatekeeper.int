@@ -30,7 +30,7 @@ AbilityDescName="Gatekeeper Blaster"
 
 [PA_Gatekeeper_Tech X2TechTemplate]
 DisplayName="Restoring a Gatekeeper"
-Summary="We could use their enormous psionic output to reanimate the shell and with the help of Chief Engineer Shen, we could our own version of a Gatekeeper."
+Summary="We could use their enormous psionic output to reanimate the shell and with the help of Chief Engineer Shen, we could make our own version of a Gatekeeper."
 CodeName="Tentakles"
 LongDescript="The gatekeeper restoration was a sucess"
 
