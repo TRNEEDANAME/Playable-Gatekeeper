@@ -161,20 +161,20 @@ static function array<X2DataTemplate> CreateTemplates()
 
 static function X2AbilityTemplate CreatePA_Domination()
 {
-	local X2AbilityTemplate             Template;
-	local X2AbilityCost_ActionPoints    ActionPointCost;
-	local X2AbilityMultiTarget_Radius 	RadiusMultiTarget;
-	local X2Condition_UnitProperty      UnitPropertyCondition;
-	local X2Effect_MindControl          MindControlEffect;
-	local X2Effect_StunRecover			StunRecoverEffect;
-	local X2Condition_UnitEffects       EffectCondition;
-	local X2AbilityCharges              Charges;
-	local X2AbilityCost_Charges         ChargeCost;
-	local X2AbilityCooldown             Cooldown;
-	local X2Condition_UnitImmunities	UnitImmunityCondition;
+	local X2AbilityTemplate                       Template;
+	local X2AbilityCost_ActionPoints              ActionPointCost;
+	local X2AbilityMultiTarget_Radius 	          RadiusMultiTarget;
+	local X2Condition_UnitProperty                UnitPropertyCondition;
+	local X2Effect_MindControl                    MindControlEffect;
+	local X2Effect_StunRecover		    	          StunRecoverEffect;
+	local X2Condition_UnitEffects                 EffectCondition;
+	local X2AbilityCharges                        Charges;
+	local X2AbilityCost_Charges                   ChargeCost;
+	local X2AbilityCooldown                       Cooldown;
+	local X2Condition_UnitImmunities	            UnitImmunityCondition;
 	local X2AbilityToHitCalc_StatCheck_UnitVsUnit StatCheck;
-	local X2Condition_UnitValue	PA_IsOpen;
-	local X2AbilityTarget_Cursor CursorTarget;
+	local X2Condition_UnitValue	                  PA_IsOpen;
+	local X2AbilityTarget_Cursor                  CursorTarget;
 
 	`CREATE_X2ABILITY_TEMPLATE(Template, 'PA_Domination');
 
@@ -245,12 +245,6 @@ static function X2AbilityTemplate CreatePA_Domination()
 
 	Template.AddTargetEffect(class'X2StatusEffects'.static.CreateMindControlRemoveEffects());
 
-	Template.AbilityTargetStyle = CursorTarget;
-	Template.AbilityTriggers.AddItem(default.PlayerInputTrigger);
-
-	Template.ActivationSpeech = 'Domination';
-	Template.SourceMissSpeech = 'SoldierFailsControl';
-
 	Template.CustomFireAnim = 'HL_Psi_MindControl';
 	Template.BuildNewGameStateFn = TypicalAbility_BuildGameState;
 	Template.BuildVisualizationFn = TypicalAbility_BuildVisualization;
@@ -272,7 +266,7 @@ static function X2AbilityTemplate CreatePA_Domination()
 DefaultProperties
 {
 	PA_OpenAbilityName="Open/ClosedState"
-	PA_ToggledOpenCloseUnitValue="PA_ToggledOpenCloseUnitValue"
+	PA_ToggledOpenCloseUnitValue="ToggledOpenCloseUnitValue"
 	PA_ClosedEffectName="GatekeeperClosedEffect"
 	PA_OpenedEffectName="GatekeeperOpenEffect"
 }
