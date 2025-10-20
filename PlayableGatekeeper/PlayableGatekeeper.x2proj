@@ -8,7 +8,6 @@
     <AssemblyName>PlayableGatekeeper</AssemblyName>
     <RootNamespace>PlayableGatekeeper</RootNamespace>
   </PropertyGroup>
-  <Import Project="$(BuildCommonRoot)XCOM2.targets" />
   <PropertyGroup>
     <SolutionRoot>$(MSBuildProjectDirectory)\..\</SolutionRoot>
     <ScriptsDir>$(SolutionRoot).scripts\</ScriptsDir>
